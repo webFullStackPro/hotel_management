@@ -1,4 +1,4 @@
-# dormitory_management
+# hotel management
 
 #### 介绍
 酒店管理系统，纯前端，v2_el目录是vue2+elementui实现，v3_el目录是vue3+elementplus实现
