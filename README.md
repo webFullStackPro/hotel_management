@@ -11,9 +11,13 @@
 
 1.安装node,版本20+
 
+
 2.下载代码到本地
 
+
 3.vue2+elementui实现
+
+
 3.1.命令行进入v2_el目录  
 3.2.执行  _npm install_  安装依赖
 3.3.执行  _npm run serve_  本地启动
