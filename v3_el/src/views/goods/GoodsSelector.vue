@@ -47,16 +47,16 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref, inject, toRefs, defineEmits} from 'vue';
+import { defineEmits, inject, onMounted, reactive, ref, toRefs } from 'vue'
 import goodsApi from '@/api/goodsApi'
-import type {GoodsQueryForm} from "@/types/req/goodsQueryForm";
-import type {Goods} from "@/types/resp/goods";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
-import type {Result} from "@/types/result";
-import type {Page} from "@/types/page";
+import type { GoodsQueryForm } from '@/types/req/goodsQueryForm'
+import type { Goods } from '@/types/resp/goods'
+import { type FormInstance } from 'element-plus'
+import type { Result } from '@/types/result'
+import type { Page } from '@/types/page'
 
 const goodsQueryFormRef = ref<FormInstance | null>(null);
-let goodsQueryForm = reactive<GoodsQueryForm>({
+const goodsQueryForm = reactive<GoodsQueryForm>({
   name: '',
 })
 

@@ -107,16 +107,16 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref, inject, toRefs, defineEmits} from 'vue';
+import { defineEmits, inject, onMounted, reactive, ref, toRefs } from 'vue'
 import roomApi from '@/api/roomApi'
-import type {RoomQueryForm} from "@/types/req/roomQueryForm";
-import type {Room} from "@/types/resp/room";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
-import type {Result} from "@/types/result";
-import type {Page} from "@/types/page";
+import type { RoomQueryForm } from '@/types/req/roomQueryForm'
+import type { Room } from '@/types/resp/room'
+import { type FormInstance } from 'element-plus'
+import type { Result } from '@/types/result'
+import type { Page } from '@/types/page'
 
 const roomQueryFormRef = ref<FormInstance | null>(null);
-let roomQueryForm = reactive<RoomQueryForm>({
+const roomQueryForm = reactive<RoomQueryForm>({
   roomNumber: '',
   roomType: undefined,
   status: undefined,

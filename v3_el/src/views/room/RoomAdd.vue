@@ -106,7 +106,7 @@ import type {Id} from "@/types/id";
 
 const props = defineProps<Id>()
 const roomFormRef = ref<FormInstance | null>(null);
-let roomForm = reactive<RoomForm>({
+const roomForm = reactive<RoomForm>({
   roomNumber: '',
   roomType: undefined,
   price: 0,

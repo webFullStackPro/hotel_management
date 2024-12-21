@@ -29,6 +29,7 @@ export default {
       defaultOpeneds: [],
       type: 0,
       menuItems: [
+        { index: '/Home', icon: 'el-icon-s-home', title: '主页' },
         { index: '/AdminList', icon: 'el-icon-user-solid', title: '管理员' },
         { index: '/StaffList', icon: 'el-icon-service', title: '员工' },
         { index: '/GoodsList', icon: 'el-icon-goods', title: '商品' },
@@ -36,7 +37,8 @@ export default {
         { index: '/ReservationRecordList', icon: 'el-icon-tickets', title: '预定记录' },
         { index: '/CheckInRecordList', icon: 'el-icon-s-check', title: '入住记录' },
         { index: '/CheckInRecordDetailList', icon: 'el-icon-s-goods', title: '入住消费商品' },
-        { index: '/RoomMaintenanceRecordList', icon: 'el-icon-setting', title: '房间维护记录' }
+        { index: '/RoomMaintenanceRecordList', icon: 'el-icon-setting', title: '房间维护记录' },
+        { index: '/ChartList', icon: 'el-icon-pie-chart', title: '数据统计' }
       ]
     }
   },

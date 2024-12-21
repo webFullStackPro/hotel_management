@@ -17,9 +17,22 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, inject} from 'vue'
+import {computed, ref} from 'vue'
 import {useRoute} from 'vue-router'
-import { Fold, Expand, UserFilled, Service, Goods, House, GoodsFilled, Tickets, Checked, Setting } from '@element-plus/icons-vue';
+import {
+  Checked,
+  Expand,
+  Fold,
+  Goods,
+  GoodsFilled,
+  HomeFilled,
+  House,
+  PieChart,
+  Service,
+  Setting,
+  Tickets,
+  UserFilled
+} from '@element-plus/icons-vue';
 
 const route = useRoute()
 const isCollapse = ref(false);
@@ -35,6 +48,7 @@ const handleSelect = (key: string) => {
 }
 
 const menuItems = [
+  { index: '/Home', icon: HomeFilled, title: '主页' },
   { index: '/AdminList', icon: UserFilled, title: '管理员' },
   { index: '/StaffList', icon: Service, title: '员工' },
   { index: '/GoodsList', icon: Goods, title: '商品' },
@@ -42,7 +56,8 @@ const menuItems = [
   { index: '/ReservationRecordList', icon: Tickets, title: '预定记录' },
   { index: '/CheckInRecordList', icon: Checked, title: '入住记录' },
   { index: '/CheckInRecordDetailList', icon: GoodsFilled, title: '入住消费商品' },
-  { index: '/RoomMaintenanceRecordList', icon: Setting, title: '房间维护记录' }
+  { index: '/RoomMaintenanceRecordList', icon: Setting, title: '房间维护记录' },
+  { index: '/ChartList', icon: PieChart, title: '数据统计' }
 ]
 </script>
 
@@ -63,7 +78,6 @@ const menuItems = [
   font-size: 16px;
   font-weight: bold;
   color: #ffffff;
-  background: adjust-color($primary-color, $lightness: -5%);
   box-shadow: 0 1px 1px 0 $box-shadow-base;
   white-space: nowrap;
 

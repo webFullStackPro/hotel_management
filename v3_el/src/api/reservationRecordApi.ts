@@ -25,7 +25,7 @@ export default class reservationRecordApi {
 
   static async find (reservationRecordQueryForm: ReservationRecordQueryForm): Promise<Result<Page<ReservationRecord>>> {
     console.log('reservationRecordApi find params', reservationRecordQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, reservationRecordApi.reservationRecords)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(reservationRecordApi.reservationRecords)
     return response.data
   }
 

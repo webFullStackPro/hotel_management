@@ -33,6 +33,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -88,9 +89,9 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
         <template v-slot="{ row }">
-          <el-button @click.native.prevent="editRow(row.id)" type="primary">编辑</el-button>
-          <el-button @click.native.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
-          <el-button @click.native.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
+          <el-button @click.prevent="editRow(row.id)" type="primary">编辑</el-button>
+          <el-button @click.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
+          <el-button @click.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -117,18 +118,20 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref, inject, toRefs} from 'vue';
+import { inject, onMounted, reactive, ref, toRefs } from 'vue'
 import roomApi from '@/api/roomApi'
-import type {RoomQueryForm} from "@/types/req/roomQueryForm";
-import type {Room} from "@/types/resp/room";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
-import type {Result} from "@/types/result";
-import type {Page} from "@/types/page";
-import RoomAdd from "@/views/room/RoomAdd.vue"
-import RoomView from "@/views/room/RoomView.vue"
+import type { RoomQueryForm } from '@/types/req/roomQueryForm'
+import type { Room } from '@/types/resp/room'
+import { ElMessage, ElMessageBox, type FormInstance } from 'element-plus'
+import type { Result } from '@/types/result'
+import type { Page } from '@/types/page'
+import RoomAdd from '@/views/room/RoomAdd.vue'
+import RoomView from '@/views/room/RoomView.vue'
+import { exportToExcel } from '@/composables/exportUtil.ts'
+import { getRoomStatusText, getRoomTypeText, getYesOrNoText } from '@/composables/dictTranslator.ts'
 
 const roomQueryFormRef = ref<FormInstance | null>(null);
-let roomQueryForm = reactive<RoomQueryForm>({
+const roomQueryForm = reactive<RoomQueryForm>({
   roomNumber: '',
   roomType: undefined,
   status: undefined,
@@ -258,6 +261,23 @@ const handleCloseRoomAddEvent = (params: { search?: boolean } | undefined) => {
     onSearch()
   }
   roomAddVisible.value = false
+}
+
+const onExport = () => {
+  const headers = ['房号','房型','状态','价格','面积','楼层','床型','入住人数','wifi是否免费','是否有窗','是否有免费早餐']
+  roomApi.find(roomQueryForm).then(data => {
+    if (!data || !data.data || data.data.list.length < 1) {
+      ElMessage.error('无数据导出')
+      return
+    }
+    const exportData = []
+    for (const d of data.data.list) {
+      exportData.push([d.roomNumber, getRoomTypeText(d.roomType), getRoomStatusText(d.status), d.price, d.area,
+        d.floorNumber, d.bedType, d.maxOccupancy, getYesOrNoText(d.freeWifi), getYesOrNoText(d.existWindow),
+        getYesOrNoText(d.freeBreakfast)])
+    }
+    exportToExcel(headers, exportData)
+  })
 }
 </script>
 

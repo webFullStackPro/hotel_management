@@ -9,7 +9,7 @@ const router = createRouter({
       name: 'layout',
       component: Layout,
       children: [{
-        path: "/",
+        path: "/Home",
         component: () => import("@/views/Home.vue"),
         name: "Home"
       },{
@@ -44,12 +44,16 @@ const router = createRouter({
         path: "/RoomMaintenanceRecordList",
         component: () => import("@/views/roomMaintenanceRecord/RoomMaintenanceRecordList.vue"),
         name: "RoomMaintenanceRecordList"
+      },{
+        path: "/ChartList",
+        component: () => import("@/views/chart/ChartList.vue"),
+        name: "ChartList"
       }]
     }
     ,{
       path: '/Login',
       name: 'Login',
-      component: () => import('../views/Login.vue'),
+      component: () => import('@/views/Login.vue'),
     }
   ],
 })

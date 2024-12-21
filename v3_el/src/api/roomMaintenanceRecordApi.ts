@@ -24,7 +24,7 @@ export default class roomMaintenanceRecordApi {
 
   static async find (roomMaintenanceRecordQueryForm: RoomMaintenanceRecordQueryForm): Promise<Result<Page<RoomMaintenanceRecord>>> {
     console.log('roomMaintenanceRecordApi find params', roomMaintenanceRecordQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, roomMaintenanceRecordApi.roomMaintenanceRecords)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(roomMaintenanceRecordApi.roomMaintenanceRecords)
     return response.data
   }
 

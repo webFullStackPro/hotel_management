@@ -14,6 +14,7 @@ import ReservationRecordList from '@/views/reservationRecord/ReservationRecordLi
 import CheckInRecordList from '@/views/checkInRecord/CheckInRecordList.vue'
 import CheckInRecordDetailList from '@/views/checkInRecordDetail/CheckInRecordDetailList.vue'
 import RoomMaintenanceRecordList from '@/views/roomMaintenanceRecord/RoomMaintenanceRecordList.vue'
+import ChartList from '@/views/chart/ChartList.vue'
 
 
 Vue.use(VueRouter)
@@ -75,6 +76,11 @@ const routes = [
             path: '/RoomMaintenanceRecordList',
             name: 'RoomMaintenanceRecordList',
             component: RoomMaintenanceRecordList
+          },
+          {
+            path: '/ChartList',
+            name: 'ChartList',
+            component: ChartList
           }
         ]
       }

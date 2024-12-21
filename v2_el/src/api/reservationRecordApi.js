@@ -19,7 +19,7 @@ export default class reservationRecordApi {
 
   static async find (params) {
     console.log('reservationRecordApi find params', params)
-    const response = await mockApi.queryPageSuccessfully(4, reservationRecordApi.reservationRecords)
+    const response = await mockApi.queryPageSuccessfully(reservationRecordApi.reservationRecords)
     return response.data
   }
 

@@ -88,21 +88,20 @@ import {onMounted, reactive, ref, inject, toRefs, defineEmits} from 'vue';
 import checkInRecordApi from '@/api/checkInRecordApi'
 import type {CheckInRecordQueryForm} from "@/types/req/checkInRecordQueryForm";
 import type {CheckInRecord} from "@/types/resp/checkInRecord";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
+import {type FormInstance} from "element-plus";
 import type {Result} from "@/types/result";
 import type {Page} from "@/types/page";
 import { Search } from '@element-plus/icons-vue';
 import RoomSelector from "@/views/room/RoomSelector.vue";
 
 const checkInRecordQueryFormRef = ref<FormInstance | null>(null);
-let checkInRecordQueryForm = reactive<CheckInRecordQueryForm>({
+const checkInRecordQueryForm = reactive<CheckInRecordQueryForm>({
   roomId: 0,
   roomNumber: '',
   name: '',
   phone: '',
   status: undefined,
 })
-const reservationRecordSelectorVisible = ref<boolean>(false)
 const roomSelectorVisible = ref<boolean>(false)
 
 const state = reactive({

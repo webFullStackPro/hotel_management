@@ -33,6 +33,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -121,6 +122,7 @@ import roomApi from '@/api/roomApi'
 import RoomAdd from "@/views/room/RoomAdd.vue"
 import RoomView from "@/views/room/RoomView.vue"
 import listQueryMixin from '@/mixins/listQueryMixin'
+import {getRoomStatusText, getRoomTypeText, getYesOrNoText} from "@/utils/dictTranslator";
 export default {
   name: 'RoomList',
   components: {RoomAdd, RoomView},
@@ -165,6 +167,23 @@ export default {
       this.selectedRoomId = id
       this.roomAddVisible = true
       this.roomAddTitle = '房间编辑'
+    },
+    onExport () {
+      const headers = ['房号','房型','状态','价格','面积','楼层','床型','入住人数','wifi是否免费','是否有窗','是否有免费早餐']
+      const params = Object.assign(this.getPaginationParams(), this.searchParams)
+      this.getPageData(params).then(data => {
+        if (!data || !data.data || data.data.list.length < 1) {
+          this.$message.error('无数据导出')
+          return
+        }
+        const exportData = []
+        for (const d of data.data.list) {
+          exportData.push([d.roomNumber, getRoomTypeText(d.roomType), getRoomStatusText(d.status), d.price, d.area,
+            d.floorNumber, d.bedType, d.maxOccupancy, getYesOrNoText(d.freeWifi), getYesOrNoText(d.existWindow),
+            getYesOrNoText(d.freeBreakfast)])
+        }
+        this.exportToExcel(headers, exportData)
+      })
     },
     delRow (id) {
       if (!id) {

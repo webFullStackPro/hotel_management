@@ -17,7 +17,7 @@ export default class roomApi {
 
   static async find (params) {
     console.log('roomApi find params', params)
-    const response = await mockApi.queryPageSuccessfully(4, roomApi.rooms)
+    const response = await mockApi.queryPageSuccessfully(roomApi.rooms)
     return response.data
   }
 

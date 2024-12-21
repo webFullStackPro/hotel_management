@@ -94,7 +94,7 @@ import GoodsSelector from "@/views/goods/GoodsSelector.vue";
 
 const props = defineProps<Id>()
 const checkInRecordDetailFormRef = ref<FormInstance | null>(null);
-let checkInRecordDetailForm = reactive<CheckInRecordDetailForm>({
+const checkInRecordDetailForm = reactive<CheckInRecordDetailForm>({
   checkInRecordId: 0,
   name: '',
   phone: '',

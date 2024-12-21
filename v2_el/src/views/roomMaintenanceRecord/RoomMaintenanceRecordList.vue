@@ -26,6 +26,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -87,6 +88,7 @@ import StaffSelector from "@/views/staff/StaffSelector.vue";
 import RoomMaintenanceRecordAdd from "@/views/roomMaintenanceRecord/RoomMaintenanceRecordAdd.vue"
 import RoomMaintenanceRecordView from "@/views/roomMaintenanceRecord/RoomMaintenanceRecordView.vue"
 import listQueryMixin from '@/mixins/listQueryMixin'
+
 export default {
   name: 'RoomMaintenanceRecordList',
   components: {RoomSelector,StaffSelector,RoomMaintenanceRecordAdd, RoomMaintenanceRecordView},
@@ -132,6 +134,21 @@ export default {
       this.selectedRoomMaintenanceRecordId = ''
       this.roomMaintenanceRecordAddVisible = true
       this.roomMaintenanceRecordAddTitle = '房间维护记录新增'
+    },
+    onExport () {
+      const headers = ['房号','员工姓名','员工联系电话','开始时间','结束时间','维护内容']
+      const params = Object.assign(this.getPaginationParams(), this.searchParams)
+      this.getPageData(params).then(data => {
+        if (!data || !data.data || data.data.list.length < 1) {
+          this.$message.error('无数据导出')
+          return
+        }
+        const exportData = []
+        for (const d of data.data.list) {
+          exportData.push([d.roomNumber, d.staffName, d.staffPhone, d.startTime, d.endTime, d.content])
+        }
+        this.exportToExcel(headers, exportData)
+      })
     },
     editRow (id) {
       this.selectedRoomMaintenanceRecordId = id

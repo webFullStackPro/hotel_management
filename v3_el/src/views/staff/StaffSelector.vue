@@ -52,16 +52,16 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref, inject, toRefs, defineEmits} from 'vue';
+import { defineEmits, inject, onMounted, reactive, ref, toRefs } from 'vue'
 import staffApi from '@/api/staffApi'
-import type {StaffQueryForm} from "@/types/req/staffQueryForm";
-import type {Staff} from "@/types/resp/staff";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
-import type {Result} from "@/types/result";
-import type {Page} from "@/types/page";
+import type { StaffQueryForm } from '@/types/req/staffQueryForm'
+import type { Staff } from '@/types/resp/staff'
+import { type FormInstance } from 'element-plus'
+import type { Result } from '@/types/result'
+import type { Page } from '@/types/page'
 
 const staffQueryFormRef = ref<FormInstance | null>(null);
-let staffQueryForm = reactive<StaffQueryForm>({
+const staffQueryForm = reactive<StaffQueryForm>({
   name: '',
   phone: '',
 })

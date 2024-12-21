@@ -23,7 +23,7 @@ export default class roomApi {
 
   static async find (roomQueryForm: RoomQueryForm): Promise<Result<Page<Room>>> {
     console.log('roomApi find params', roomQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, roomApi.rooms)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(roomApi.rooms)
     return response.data
   }
 

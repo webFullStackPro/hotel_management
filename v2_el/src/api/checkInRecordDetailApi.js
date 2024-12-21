@@ -17,7 +17,7 @@ export default class checkInRecordDetailApi {
 
   static async find (params) {
     console.log('checkInRecordDetailApi find params', params)
-    const response = await mockApi.queryPageSuccessfully(4, checkInRecordDetailApi.checkInRecordDetails)
+    const response = await mockApi.queryPageSuccessfully(checkInRecordDetailApi.checkInRecordDetails)
     return response.data
   }
 

@@ -133,7 +133,7 @@ import RoomSelector from "@/views/room/RoomSelector.vue";
 
 const props = defineProps<Id>()
 const checkInRecordFormRef = ref<FormInstance | null>(null);
-let checkInRecordForm = reactive<CheckInRecordForm>({
+const checkInRecordForm = reactive<CheckInRecordForm>({
   reservationRecordId: 0,
   preName: '',
   prePhone: '',

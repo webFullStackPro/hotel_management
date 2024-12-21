@@ -44,9 +44,9 @@
       <el-table-column prop="amount" label="总价"></el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
         <template v-slot="{ row }">
-          <el-button @click.native.prevent="editRow(row.id)" type="primary">编辑</el-button>
-          <el-button @click.native.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
-          <el-button @click.native.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
+          <el-button @click.prevent="editRow(row.id)" type="primary">编辑</el-button>
+          <el-button @click.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
+          <el-button @click.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -90,7 +90,7 @@ import CheckInRecordDetailAdd from "@/views/checkInRecordDetail/CheckInRecordDet
 import CheckInRecordDetailView from "@/views/checkInRecordDetail/CheckInRecordDetailView.vue"
 
 const checkInRecordDetailQueryFormRef = ref<FormInstance | null>(null);
-let checkInRecordDetailQueryForm = reactive<CheckInRecordDetailQueryForm>({
+const checkInRecordDetailQueryForm = reactive<CheckInRecordDetailQueryForm>({
   checkInRecordId: 0,
   name: '',
   phone: '',
@@ -106,7 +106,6 @@ const state = reactive({
 })
 const selectedCheckInRecordDetailId = ref<number>(0)
 const checkInRecordSelectorVisible = ref<boolean>(false)
-const goodsSelectorVisible = ref<boolean>(false)
 const checkInRecordDetailAddVisible = ref<boolean>(false)
 const checkInRecordDetailViewVisible = ref<boolean>(false)
 const checkInRecordDetailAddTitle = ref<string>('')

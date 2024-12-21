@@ -21,8 +21,6 @@
         @row-dblclick="goodsSelected">
       <el-table-column prop="name" label="商品名称"></el-table-column>
       <el-table-column prop="price" label="价格"></el-table-column>
-        <el-table-column prop="createTime" label="创建时间"></el-table-column>
-        <el-table-column prop="modifyTime" label="最后修改时间"></el-table-column>
       </el-table>
       <div class="table-pagination">
         <el-pagination

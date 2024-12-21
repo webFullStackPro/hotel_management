@@ -24,7 +24,7 @@ export default class checkInRecordApi {
 
   static async find (checkInRecordQueryForm: CheckInRecordQueryForm): Promise<Result<Page<CheckInRecord>>> {
     console.log('checkInRecordApi find params', checkInRecordQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, checkInRecordApi.checkInRecords)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(checkInRecordApi.checkInRecords)
     return response.data
   }
 

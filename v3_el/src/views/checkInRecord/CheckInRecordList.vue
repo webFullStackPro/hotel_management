@@ -31,6 +31,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -41,18 +42,18 @@
       size="small"
       header-cell-class-name="table-header-cell-font"
       cell-class-name="table-cell-font">
-      <el-table-column prop="preName" label="预定人员姓名"></el-table-column>
-      <el-table-column prop="prePhone" label="预定人员联系电话"></el-table-column>
-      <el-table-column prop="roomNumber" label="房号"></el-table-column>
-      <el-table-column prop="name" label="姓名"></el-table-column>
-      <el-table-column prop="phone" label="联系电话"></el-table-column>
-      <el-table-column prop="checkInTime" label="入驻时间"></el-table-column>
-      <el-table-column prop="checkOutTime" label="退房时间"></el-table-column>
-      <el-table-column prop="roomAmount" label="房费"></el-table-column>
-      <el-table-column prop="goodsAmount" label="商品消费"></el-table-column>
-      <el-table-column prop="amount" label="总金额"></el-table-column>
-      <el-table-column prop="remark" label="remark"></el-table-column>
-      <el-table-column prop="status" label="状态">
+      <el-table-column prop="preName" label="预定人员姓名" width="100"></el-table-column>
+      <el-table-column prop="prePhone" label="预定人员联系电话" width="140"></el-table-column>
+      <el-table-column prop="roomNumber" label="房号" width="100"></el-table-column>
+      <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+      <el-table-column prop="phone" label="联系电话" width="100"></el-table-column>
+      <el-table-column prop="checkInTime" label="入驻时间" width="140"></el-table-column>
+      <el-table-column prop="checkOutTime" label="退房时间" width="140"></el-table-column>
+      <el-table-column prop="roomAmount" label="房费" width="100"></el-table-column>
+      <el-table-column prop="goodsAmount" label="商品消费" width="100"></el-table-column>
+      <el-table-column prop="amount" label="总金额" width="100"></el-table-column>
+      <el-table-column prop="remark" label="备注" width="100"></el-table-column>
+      <el-table-column prop="status" label="状态" width="100">
         <template v-slot="{ row }">
           <div v-if="row.status === 20">已入驻</div>
           <div v-if="row.status === 30">已取消</div>
@@ -61,9 +62,9 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
         <template v-slot="{ row }">
-          <el-button @click.native.prevent="editRow(row.id)" type="primary">编辑</el-button>
-          <el-button @click.native.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
-          <el-button @click.native.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
+          <el-button @click.prevent="editRow(row.id)" type="primary">编辑</el-button>
+          <el-button @click.prevent="delRow(row.id)" type="danger" plain>删除</el-button>
+          <el-button @click.prevent="detailRow(row.id)" type="primary" plain>详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -94,20 +95,22 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref, inject, toRefs} from 'vue';
+import { inject, onMounted, reactive, ref, toRefs } from 'vue'
 import checkInRecordApi from '@/api/checkInRecordApi'
-import type {CheckInRecordQueryForm} from "@/types/req/checkInRecordQueryForm";
-import type {CheckInRecord} from "@/types/resp/checkInRecord";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
-import type {Result} from "@/types/result";
-import type {Page} from "@/types/page";
-import { Search } from '@element-plus/icons-vue';
-import RoomSelector from "@/views/room/RoomSelector.vue";
-import CheckInRecordAdd from "@/views/checkInRecord/CheckInRecordAdd.vue"
-import CheckInRecordView from "@/views/checkInRecord/CheckInRecordView.vue"
+import type { CheckInRecordQueryForm } from '@/types/req/checkInRecordQueryForm'
+import type { CheckInRecord } from '@/types/resp/checkInRecord'
+import { ElMessage, ElMessageBox, type FormInstance } from 'element-plus'
+import type { Result } from '@/types/result'
+import type { Page } from '@/types/page'
+import { Search } from '@element-plus/icons-vue'
+import RoomSelector from '@/views/room/RoomSelector.vue'
+import CheckInRecordAdd from '@/views/checkInRecord/CheckInRecordAdd.vue'
+import CheckInRecordView from '@/views/checkInRecord/CheckInRecordView.vue'
+import { exportToExcel } from '@/composables/exportUtil.ts'
+import { getCheckInRecordStatusText } from '@/composables/dictTranslator.ts'
 
 const checkInRecordQueryFormRef = ref<FormInstance | null>(null);
-let checkInRecordQueryForm = reactive<CheckInRecordQueryForm>({
+const checkInRecordQueryForm = reactive<CheckInRecordQueryForm>({
   roomId: 0,
   roomNumber: '',
   name: '',
@@ -124,7 +127,6 @@ const state = reactive({
   pageSizes: [10, 20, 50]
 })
 const selectedCheckInRecordId = ref<number>(0)
-const reservationRecordSelectorVisible = ref<boolean>(false)
 const roomSelectorVisible = ref<boolean>(false)
 const checkInRecordAddVisible = ref<boolean>(false)
 const checkInRecordViewVisible = ref<boolean>(false)
@@ -253,6 +255,22 @@ const handleCloseCheckInRecordAddEvent = (params: { search?: boolean } | undefin
     onSearch()
   }
   checkInRecordAddVisible.value = false
+}
+
+const onExport = () => {
+  const headers = ['预定人员姓名', '预定人员联系电话', '房号', '姓名', '联系电话', '入驻时间', '退房时间', '房费', '商品消费', '总金额', '备注', '状态']
+  checkInRecordApi.find(checkInRecordQueryForm).then(data => {
+    if (!data || !data.data || data.data.list.length < 1) {
+      ElMessage.error('无数据导出')
+      return
+    }
+    const exportData = []
+    for (const d of data.data.list) {
+      exportData.push([d.preName, d.prePhone, d.roomNumber, d.name, d.phone, d.checkInTime,
+        d.checkOutTime, d.roomAmount, d.goodsAmount, d.amount, d.remark, getCheckInRecordStatusText(d.status)])
+    }
+    exportToExcel(headers, exportData)
+  })
 }
 </script>
 

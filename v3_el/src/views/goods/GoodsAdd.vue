@@ -42,7 +42,7 @@ import type {Id} from "@/types/id";
 
 const props = defineProps<Id>()
 const goodsFormRef = ref<FormInstance | null>(null);
-let goodsForm = reactive<GoodsForm>({
+const goodsForm = reactive<GoodsForm>({
   name: '',
   price: 0,
 })

@@ -17,6 +17,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -103,6 +104,21 @@ export default {
       this.selectedStaffId = ''
       this.staffAddVisible = true
       this.staffAddTitle = '员工新增'
+    },
+    onExport () {
+      const headers = ['姓名', '联系电话', '岗位', '特长']
+      const params = Object.assign(this.getPaginationParams(), this.searchParams)
+      this.getPageData(params).then(data => {
+        if (!data || !data.data || data.data.list.length < 1) {
+          this.$message.error('无数据导出')
+          return
+        }
+        const exportData = []
+        for (const d of data.data.list) {
+          exportData.push([d.name, d.phone, d.position, d.specialty])
+        }
+        this.exportToExcel(headers, exportData)
+      })
     },
     editRow (id) {
       this.selectedStaffId = id

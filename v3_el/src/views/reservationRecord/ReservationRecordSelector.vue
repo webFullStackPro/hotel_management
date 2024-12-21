@@ -78,18 +78,18 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref, inject, toRefs, defineEmits} from 'vue';
+import { defineEmits, inject, onMounted, reactive, ref, toRefs } from 'vue'
 import reservationRecordApi from '@/api/reservationRecordApi'
-import type {ReservationRecordQueryForm} from "@/types/req/reservationRecordQueryForm";
-import type {ReservationRecord} from "@/types/resp/reservationRecord";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
-import type {Result} from "@/types/result";
-import type {Page} from "@/types/page";
-import { Search } from '@element-plus/icons-vue';
-import RoomSelector from "@/views/room/RoomSelector.vue";
+import type { ReservationRecordQueryForm } from '@/types/req/reservationRecordQueryForm'
+import type { ReservationRecord } from '@/types/resp/reservationRecord'
+import { type FormInstance } from 'element-plus'
+import type { Result } from '@/types/result'
+import type { Page } from '@/types/page'
+import { Search } from '@element-plus/icons-vue'
+import RoomSelector from '@/views/room/RoomSelector.vue'
 
 const reservationRecordQueryFormRef = ref<FormInstance | null>(null);
-let reservationRecordQueryForm = reactive<ReservationRecordQueryForm>({
+const reservationRecordQueryForm = reactive<ReservationRecordQueryForm>({
   roomId: 0,
   roomNumber: '',
   name: '',

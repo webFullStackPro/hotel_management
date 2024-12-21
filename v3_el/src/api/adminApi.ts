@@ -25,7 +25,7 @@ export default class adminApi {
 
   static async find (adminQueryForm: AdminQueryForm): Promise<Result<Page<Admin>>> {
     console.log('adminApi find params', adminQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, adminApi.admins)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(adminApi.admins)
     return response.data
   }
 

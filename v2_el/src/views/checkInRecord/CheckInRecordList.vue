@@ -29,6 +29,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -39,18 +40,18 @@
       size="mini"
       header-cell-class-name="table-header-cell-font"
       cell-class-name="table-cell-font">
-      <el-table-column prop="preName" label="预定人员姓名"></el-table-column>
-      <el-table-column prop="prePhone" label="预定人员联系电话"></el-table-column>
-      <el-table-column prop="roomNumber" label="房号"></el-table-column>
-      <el-table-column prop="name" label="姓名"></el-table-column>
-      <el-table-column prop="phone" label="联系电话"></el-table-column>
-      <el-table-column prop="checkInTime" label="入驻时间"></el-table-column>
-      <el-table-column prop="checkOutTime" label="退房时间"></el-table-column>
-      <el-table-column prop="roomAmount" label="房费"></el-table-column>
-      <el-table-column prop="goodsAmount" label="商品消费"></el-table-column>
-      <el-table-column prop="amount" label="总金额"></el-table-column>
-      <el-table-column prop="remark" label="remark"></el-table-column>
-      <el-table-column prop="status" label="状态">
+      <el-table-column prop="preName" label="预定人员姓名" width="100"></el-table-column>
+      <el-table-column prop="prePhone" label="预定人员联系电话" width="140"></el-table-column>
+      <el-table-column prop="roomNumber" label="房号" width="100"></el-table-column>
+      <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+      <el-table-column prop="phone" label="联系电话" width="100"></el-table-column>
+      <el-table-column prop="checkInTime" label="入驻时间" width="140"></el-table-column>
+      <el-table-column prop="checkOutTime" label="退房时间" width="140"></el-table-column>
+      <el-table-column prop="roomAmount" label="房费" width="100"></el-table-column>
+      <el-table-column prop="goodsAmount" label="商品消费" width="100"></el-table-column>
+      <el-table-column prop="amount" label="总金额" width="100"></el-table-column>
+      <el-table-column prop="remark" label="备注" width="100"></el-table-column>
+      <el-table-column prop="status" label="状态" width="100">
         <template v-slot="{ row }">
           <div v-if="row.status === 20">已入驻</div>
           <div v-if="row.status === 30">已取消</div>
@@ -97,6 +98,8 @@ import RoomSelector from "@/views/room/RoomSelector.vue";
 import CheckInRecordAdd from "@/views/checkInRecord/CheckInRecordAdd.vue"
 import CheckInRecordView from "@/views/checkInRecord/CheckInRecordView.vue"
 import listQueryMixin from '@/mixins/listQueryMixin'
+import {getCheckInRecordStatusText} from "@/utils/dictTranslator";
+
 export default {
   name: 'CheckInRecordList',
   components: {RoomSelector,CheckInRecordAdd, CheckInRecordView},
@@ -142,6 +145,22 @@ export default {
       this.selectedCheckInRecordId = ''
       this.checkInRecordAddVisible = true
       this.checkInRecordAddTitle = '入住记录新增'
+    },
+    onExport () {
+      const headers = ['预定人员姓名', '预定人员联系电话', '房号', '姓名', '联系电话', '入驻时间', '退房时间', '房费', '商品消费', '总金额', '备注', '状态']
+      const params = Object.assign(this.getPaginationParams(), this.searchParams)
+      this.getPageData(params).then(data => {
+        if (!data || !data.data || data.data.list.length < 1) {
+          this.$message.error('无数据导出')
+          return
+        }
+        const exportData = []
+        for (const d of data.data.list) {
+          exportData.push([d.preName, d.prePhone, d.roomNumber, d.name, d.phone, d.checkInTime,
+            d.checkOutTime, d.roomAmount, d.goodsAmount, d.amount, d.remark, getCheckInRecordStatusText(d.status)])
+        }
+        this.exportToExcel(headers, exportData)
+      })
     },
     editRow (id) {
       this.selectedCheckInRecordId = id

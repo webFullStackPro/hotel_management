@@ -14,6 +14,7 @@
         <el-button type="primary" @click="onSearch">查询</el-button>
         <el-button @click="onReset">重置</el-button>
         <el-button type="primary" @click="onAdd">新增</el-button>
+        <el-button type="primary" @click="onExport">导出</el-button>
       </el-form-item>
     </el-form>
 
@@ -26,8 +27,6 @@
       cell-class-name="table-cell-font">
       <el-table-column prop="name" label="商品名称"></el-table-column>
       <el-table-column prop="price" label="价格"></el-table-column>
-      <el-table-column prop="createTime" label="创建时间"></el-table-column>
-      <el-table-column prop="modifyTime" label="最后修改时间"></el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
         <template v-slot="{ row }">
           <el-button @click.native.prevent="editRow(row.id)" type="primary">编辑</el-button>
@@ -98,6 +97,21 @@ export default {
       this.selectedGoodsId = ''
       this.goodsAddVisible = true
       this.goodsAddTitle = '商品新增'
+    },
+    onExport () {
+      const headers = ['商品名称', '价格']
+      const params = Object.assign(this.getPaginationParams(), this.searchParams)
+      this.getPageData(params).then(data => {
+        if (!data || !data.data || data.data.list.length < 1) {
+          this.$message.error('无数据导出')
+          return
+        }
+        const exportData = []
+        for (const d of data.data.list) {
+          exportData.push([d.name, d.price])
+        }
+        this.exportToExcel(headers, exportData)
+      })
     },
     editRow (id) {
       this.selectedGoodsId = id

@@ -24,7 +24,7 @@ export default class staffApi {
 
   static async find (staffQueryForm: StaffQueryForm): Promise<Result<Page<Staff>>> {
     console.log('staffApi find params', staffQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, staffApi.staffs)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(staffApi.staffs)
     return response.data
   }
 

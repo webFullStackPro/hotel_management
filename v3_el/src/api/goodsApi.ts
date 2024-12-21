@@ -25,7 +25,7 @@ export default class goodsApi {
 
   static async find (goodsQueryForm: GoodsQueryForm): Promise<Result<Page<Goods>>> {
     console.log('goodsApi find params', goodsQueryForm)
-    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(4, goodsApi.goodss)
+    const response: Response<Page<object>> = await mockApi.queryPageSuccessfully(goodsApi.goodss)
     return response.data
   }
 

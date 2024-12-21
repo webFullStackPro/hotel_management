@@ -19,7 +19,7 @@ export default class goodsApi {
 
   static async find (params) {
     console.log('goodsApi find params', params)
-    const response = await mockApi.queryPageSuccessfully(4, goodsApi.goodss)
+    const response = await mockApi.queryPageSuccessfully(goodsApi.goodss)
     return response.data
   }
 
