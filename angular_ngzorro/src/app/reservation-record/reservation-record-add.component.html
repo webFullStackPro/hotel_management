@@ -1,0 +1,78 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()" [nzStyle]="{'top': '50px'}">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form [formGroup]="reservationRecordForm" (keydown.enter)="$event.preventDefault()">
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="roomNumber" nzRequired>房号</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择房号'">
+              <nz-input-group nzSearch [nzAddOnAfter]="roomNumberSuffixIconButton">
+                <input nz-input formControlName="roomNumber" placeholder="请选择房号" readonly />
+              </nz-input-group>
+              <ng-template #roomNumberSuffixIconButton>
+                <button nz-button nzType="primary" nzSearch (click)="findRoom()"><nz-icon nzType="search" /></button>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="name" nzRequired>姓名</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请输入姓名'">
+              <input nz-input formControlName="name" placeholder="请输入姓名" maxlength="64"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="phone">联系电话</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="phone" placeholder="请输入联系电话" maxlength="20"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="checkInTime">预定入驻时间</nz-form-label>
+            <nz-form-control >
+              <nz-date-picker nzShowTime formControlName="checkInTime" nzFormat="yyyy-MM-dd HH:mm:ss"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="remark">备注</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="remark" placeholder="请输入备注" maxlength="255"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="status">状态</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="status">
+                <nz-option nzLabel="已预定" [nzValue]="10"></nz-option>
+                <nz-option nzLabel="已入驻" [nzValue]="20"></nz-option>
+                <nz-option nzLabel="已取消" [nzValue]="30"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="primary" (click)="onSave()" [nzLoading]="saveLoading">保存</button>
+      <button nz-button nzType="default" (click)="onReset()" [nzLoading]="saveLoading">重置</button>
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>
+<room-selector (roomSelectedEvent)="handleRoomSelectedEvent($event)"></room-selector>

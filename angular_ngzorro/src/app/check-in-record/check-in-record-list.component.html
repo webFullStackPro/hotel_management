@@ -1,0 +1,115 @@
+<nz-breadcrumb class="breadcrumb">
+  <nz-breadcrumb-item>
+    <a>首页</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>入住记录列表</nz-breadcrumb-item>
+</nz-breadcrumb>
+<form nz-form class="search-form" [formGroup]="searchForm" (keydown.enter)="$event.preventDefault();onSearch()" nzLayout="inline">
+  <nz-form-item>
+    <nz-form-label nzFor="preName">预定人员姓名</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="preNameSuffixIconButton">
+        <input nz-input formControlName="preName" placeholder="请选择预定人员姓名" readonly />
+      </nz-input-group>
+      <ng-template #preNameSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findReservationRecord()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="prePhone">预定人员联系电话</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="prePhoneSuffixIconButton">
+        <input nz-input formControlName="prePhone" placeholder="请选择预定人员联系电话" readonly />
+      </nz-input-group>
+      <ng-template #prePhoneSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findReservationRecord()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="roomNumber">房号</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="roomNumberSuffixIconButton">
+        <input nz-input formControlName="roomNumber" placeholder="请选择房号" readonly />
+      </nz-input-group>
+      <ng-template #roomNumberSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findRoom()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="name">姓名</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="name" placeholder="请输入姓名" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="phone">联系电话</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="phone" placeholder="请输入联系电话" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="status">状态</nz-form-label>
+    <nz-form-control>
+      <nz-select formControlName="status" class="custom-select-width">
+        <nz-option nzLabel="已入驻" [nzValue]="20"></nz-option>
+        <nz-option nzLabel="已取消" [nzValue]="30"></nz-option>
+        <nz-option nzLabel="已退房" [nzValue]="40"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button type="button" nzType="primary" [nzLoading]="searchLoading" (click)="onSearch()">查询</button>
+  <button nz-button type="button" class="margin-button" (click)="onReset()">重置</button>
+  <button nz-button type="button" class="margin-button" nzType="primary" (click)="onAdd()">新增</button>
+  <button nz-button type="button" class="margin-button" nzType="primary" [nzLoading]="searchLoading" (click)="onExport()">导出</button>
+</form>
+<nz-table #basicTable [nzData]="listOfData" [nzTotal]="total" [nzLoading]="searchLoading" nzSize="small">
+  <thead>
+    <tr>
+      <th>预定人员姓名</th>
+      <th>预定人员联系电话</th>
+      <th>房号</th>
+      <th>姓名</th>
+      <th>联系电话</th>
+      <th>入驻时间</th>
+      <th>退房时间</th>
+      <th>房费</th>
+      <th>商品消费</th>
+      <th>总金额</th>
+      <th>备注</th>
+      <th>状态</th>
+      <th nzWidth="250px">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.preName}}</td>
+      <td>{{data.prePhone}}</td>
+      <td>{{data.roomNumber}}</td>
+      <td>{{data.name}}</td>
+      <td>{{data.phone}}</td>
+      <td>{{data.checkInTime}}</td>
+      <td>{{data.checkOutTime}}</td>
+      <td>{{data.roomAmount}}</td>
+      <td>{{data.goodsAmount}}</td>
+      <td>{{data.amount}}</td>
+      <td>{{data.remark}}</td>
+      <td>
+        <ng-container *ngIf="data.status === 20">已入驻</ng-container>
+        <ng-container *ngIf="data.status === 30">已取消</ng-container>
+        <ng-container *ngIf="data.status === 40">已退房</ng-container>
+      </td>
+      <td>
+        <button nz-button type="button" nzType="primary" (click)="editRow(data.id)">编辑</button>
+        <button nz-button type="button" nzDanger class="margin-button" (click)="delRow(data.id)">删除</button>
+        <button nz-button type="button" class="margin-button" (click)="detailRow(data)">详情</button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<reservation-record-selector (reservationRecordSelectedEvent)="handleReservationRecordSelectedEvent($event)"></reservation-record-selector>
+<room-selector (roomSelectedEvent)="handleRoomSelectedEvent($event)"></room-selector>
+<check-in-record-add (addedEvent)="onAdded($event)"></check-in-record-add>
+<check-in-record-view></check-in-record-view>

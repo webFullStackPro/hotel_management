@@ -1,0 +1,88 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()" [nzStyle]="{'top': '50px'}">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form [formGroup]="reservationRecordForm">
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="roomNumber">房号</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="roomNumber" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="name">姓名</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="name" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="phone">联系电话</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="phone" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="checkInTime">预定入驻时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="checkInTime" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="remark">备注</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="remark" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="status">状态</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="status">
+                <nz-option nzLabel="已预定" [nzValue]="10"></nz-option>
+                <nz-option nzLabel="已入驻" [nzValue]="20"></nz-option>
+                <nz-option nzLabel="已取消" [nzValue]="30"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="createTime">创建时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="createTime" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="modifyTime">最后修改时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="modifyTime" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>

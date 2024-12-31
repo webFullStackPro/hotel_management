@@ -43,6 +43,16 @@
 
 5.4.浏览器访问http://localhost:1573
 
+6.angular+ngzorro实现
+
+6.1.命令行进入angular_ngzorro目录
+ 
+6.2.执行  _npm install_  安装依赖
+
+6.3.执行  _npm run dev_  本地启动
+
+6.4.浏览器访问http://localhost:4200
+
 
 #### 使用说明
 

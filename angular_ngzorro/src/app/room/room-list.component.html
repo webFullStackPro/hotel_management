@@ -1,0 +1,105 @@
+<nz-breadcrumb class="breadcrumb">
+  <nz-breadcrumb-item>
+    <a>首页</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>房间列表</nz-breadcrumb-item>
+</nz-breadcrumb>
+<form nz-form class="search-form" [formGroup]="searchForm" (keydown.enter)="onSearch()" nzLayout="inline">
+  <nz-form-item>
+    <nz-form-label nzFor="roomNumber">房号</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="roomNumber" placeholder="请输入房号" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="roomType">房型</nz-form-label>
+    <nz-form-control>
+      <nz-select formControlName="roomType" class="custom-select-width">
+        <nz-option nzLabel="标准单人间" [nzValue]="10"></nz-option>
+        <nz-option nzLabel="豪华单人间" [nzValue]="11"></nz-option>
+        <nz-option nzLabel="标准双人间" [nzValue]="20"></nz-option>
+        <nz-option nzLabel="豪华双人间" [nzValue]="21"></nz-option>
+        <nz-option nzLabel="标准套房" [nzValue]="90"></nz-option>
+        <nz-option nzLabel="豪华套房" [nzValue]="91"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="status">状态</nz-form-label>
+    <nz-form-control>
+      <nz-select formControlName="status" class="custom-select-width">
+        <nz-option nzLabel="空房" [nzValue]="10"></nz-option>
+        <nz-option nzLabel="已预定" [nzValue]="20"></nz-option>
+        <nz-option nzLabel="已入住" [nzValue]="30"></nz-option>
+        <nz-option nzLabel="已退房(待清理)" [nzValue]="40"></nz-option>
+        <nz-option nzLabel="维修中" [nzValue]="50"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button type="button" nzType="primary" [nzLoading]="searchLoading" (click)="onSearch()">查询</button>
+  <button nz-button type="button" class="margin-button" (click)="onReset()">重置</button>
+  <button nz-button type="button" class="margin-button" nzType="primary" (click)="onAdd()">新增</button>
+  <button nz-button type="button" class="margin-button" nzType="primary" [nzLoading]="searchLoading" (click)="onExport()">导出</button>
+</form>
+<nz-table #basicTable [nzData]="listOfData" [nzTotal]="total" [nzLoading]="searchLoading" nzSize="small">
+  <thead>
+    <tr>
+      <th>房号</th>
+      <th>房型</th>
+      <th>状态</th>
+      <th>价格</th>
+      <th>面积</th>
+      <th>楼层</th>
+      <th>床型</th>
+      <th>入住人数</th>
+      <th>wifi是否免费</th>
+      <th>是否有窗</th>
+      <th>是否有免费早餐</th>
+      <th nzWidth="250px">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.roomNumber}}</td>
+      <td>
+        <ng-container *ngIf="data.roomType === 10">标准单人间</ng-container>
+        <ng-container *ngIf="data.roomType === 11">豪华单人间</ng-container>
+        <ng-container *ngIf="data.roomType === 20">标准双人间</ng-container>
+        <ng-container *ngIf="data.roomType === 21">豪华双人间</ng-container>
+        <ng-container *ngIf="data.roomType === 90">标准套房</ng-container>
+        <ng-container *ngIf="data.roomType === 91">豪华套房</ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="data.status === 10">空房</ng-container>
+        <ng-container *ngIf="data.status === 20">已预定</ng-container>
+        <ng-container *ngIf="data.status === 30">已入住</ng-container>
+        <ng-container *ngIf="data.status === 40">已退房(待清理)</ng-container>
+        <ng-container *ngIf="data.status === 50">维修中</ng-container>
+      </td>
+      <td>{{data.price}}</td>
+      <td>{{data.area}}</td>
+      <td>{{data.floorNumber}}</td>
+      <td>{{data.bedType}}</td>
+      <td>{{data.maxOccupancy}}</td>
+      <td>
+        <ng-container *ngIf="data.freeWifi === 0">否</ng-container>
+        <ng-container *ngIf="data.freeWifi === 1">是</ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="data.existWindow === 0">否</ng-container>
+        <ng-container *ngIf="data.existWindow === 1">是</ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="data.freeBreakfast === 0">否</ng-container>
+        <ng-container *ngIf="data.freeBreakfast === 1">是</ng-container>
+      </td>
+      <td>
+        <button nz-button type="button" nzType="primary" (click)="editRow(data.id)">编辑</button>
+        <button nz-button type="button" nzDanger class="margin-button" (click)="delRow(data.id)">删除</button>
+        <button nz-button type="button" class="margin-button" (click)="detailRow(data)">详情</button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<room-add (addedEvent)="onAdded($event)"></room-add>
+<room-view></room-view>

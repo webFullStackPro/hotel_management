@@ -1,0 +1,94 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()" [nzStyle]="{'top': '50px'}">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form [formGroup]="checkInRecordDetailForm" (keydown.enter)="$event.preventDefault()">
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="name" nzRequired>入住人员姓名</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择入住人员姓名'">
+              <nz-input-group nzSearch [nzAddOnAfter]="nameSuffixIconButton">
+                <input nz-input formControlName="name" placeholder="请选择入住人员姓名" readonly />
+              </nz-input-group>
+              <ng-template #nameSuffixIconButton>
+                <button nz-button  nzType="primary" nzSearch (click)="findCheckInRecord()"><nz-icon nzType="search" /></button>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="phone" nzRequired>入住人员联系电话</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择入住人员联系电话'">
+              <nz-input-group nzSearch [nzAddOnAfter]="phoneSuffixIconButton">
+                <input nz-input formControlName="phone" placeholder="请选择入住人员联系电话" readonly />
+              </nz-input-group>
+              <ng-template #phoneSuffixIconButton>
+                <button nz-button nzType="primary" nzSearch (click)="findCheckInRecord()"><nz-icon nzType="search" /></button>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="goodsName" nzRequired>商品名称</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择商品名称'">
+              <nz-input-group nzSearch [nzAddOnAfter]="goodsNameSuffixIconButton">
+                <input nz-input formControlName="goodsName" placeholder="请选择商品名称" readonly />
+              </nz-input-group>
+              <ng-template #goodsNameSuffixIconButton>
+                <button nz-button nzType="primary" nzSearch (click)="findGoods()"><nz-icon nzType="search" /></button>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="goodsPrice" nzRequired>商品价格</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择商品价格'">
+              <nz-input-group nzSearch [nzAddOnAfter]="goodsPriceSuffixIconButton">
+                <input nz-input formControlName="goodsPrice" placeholder="请选择商品价格" readonly />
+              </nz-input-group>
+              <ng-template #goodsPriceSuffixIconButton>
+                <button nz-button nzType="primary" nzSearch (click)="findGoods()"><nz-icon nzType="search" /></button>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="qty" nzRequired>数量</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请输入数量'">
+            <nz-input-number formControlName="qty" [nzMin]="1" [nzMax]="9999" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="price" nzRequired>单价</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请输入单价'">
+            <nz-input-number formControlName="price" [nzMin]="1" [nzMax]="9999" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="amount">总价</nz-form-label>
+            <nz-form-control>
+            <nz-input-number formControlName="amount" [nzMin]="1" [nzMax]="99999999" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="primary" (click)="onSave()" [nzLoading]="saveLoading">保存</button>
+      <button nz-button nzType="default" (click)="onReset()" [nzLoading]="saveLoading">重置</button>
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>
+<check-in-record-selector (checkInRecordSelectedEvent)="handleCheckInRecordSelectedEvent($event)"></check-in-record-selector>
+<goods-selector (goodsSelectedEvent)="handleGoodsSelectedEvent($event)"></goods-selector>

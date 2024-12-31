@@ -1,0 +1,120 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()" [nzStyle]="{'top': '50px'}">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form [formGroup]="roomForm">
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="roomNumber" nzRequired>房号</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请输入房号'">
+              <input nz-input formControlName="roomNumber" placeholder="请输入房号" maxlength="32"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="roomType" nzRequired>房型</nz-form-label>
+            <nz-form-control [nzErrorTip]="'请选择房型'">
+              <nz-select formControlName="roomType">
+                <nz-option nzLabel="标准单人间" [nzValue]="10"></nz-option>
+                <nz-option nzLabel="豪华单人间" [nzValue]="11"></nz-option>
+                <nz-option nzLabel="标准双人间" [nzValue]="20"></nz-option>
+                <nz-option nzLabel="豪华双人间" [nzValue]="21"></nz-option>
+                <nz-option nzLabel="标准套房" [nzValue]="90"></nz-option>
+                <nz-option nzLabel="豪华套房" [nzValue]="91"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="price">价格</nz-form-label>
+            <nz-form-control>
+            <nz-input-number formControlName="price" [nzMin]="1" [nzMax]="99999999" [nzPrecision]="2" [nzStep]="0.1" nzPlaceHolder="Digital" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="area">面积</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="area" placeholder="请输入面积" maxlength="64"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="floorNumber">楼层</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="floorNumber" placeholder="请输入楼层" maxlength="32"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="bedType">床型</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="bedType" placeholder="请输入床型" maxlength="50"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="maxOccupancy">入住人数</nz-form-label>
+            <nz-form-control>
+            <nz-input-number formControlName="maxOccupancy" [nzMin]="1" [nzMax]="10" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="freeWifi">wifi是否免费</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="freeWifi">
+                <nz-option nzLabel="否" [nzValue]="0"></nz-option>
+                <nz-option nzLabel="是" [nzValue]="1"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="existWindow">是否有窗</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="existWindow">
+                <nz-option nzLabel="否" [nzValue]="0"></nz-option>
+                <nz-option nzLabel="是" [nzValue]="1"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="freeBreakfast">是否有免费早餐</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="freeBreakfast">
+                <nz-option nzLabel="否" [nzValue]="0"></nz-option>
+                <nz-option nzLabel="是" [nzValue]="1"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="primary" (click)="onSave()" [nzLoading]="saveLoading">保存</button>
+      <button nz-button nzType="default" (click)="onReset()" [nzLoading]="saveLoading">重置</button>
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>

@@ -1,0 +1,84 @@
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="modalWidth" (nzOnCancel)="onBack()" [nzStyle]="{'top': '50px'}">
+  <div *nzModalTitle>{{ title }}</div>
+  <ng-container *nzModalContent>
+    <form [formGroup]="checkInRecordDetailForm">
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="name">入住人员姓名</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="name" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="phone">入住人员联系电话</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="phone" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="goodsName">商品名称</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="goodsName" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="goodsPrice">商品价格</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="goodsPrice" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="qty">数量</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="qty" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="price">单价</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="price" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="10">
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="amount">总价</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="amount" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="createTime">创建时间</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="createTime" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <div class="form-button-container">
+      <button nz-button nzType="default" (click)="onBack()">关闭</button>
+    </div>
+  </div>
+</nz-modal>

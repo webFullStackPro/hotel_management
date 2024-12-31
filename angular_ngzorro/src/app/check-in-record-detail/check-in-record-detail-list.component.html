@@ -1,0 +1,89 @@
+<nz-breadcrumb class="breadcrumb">
+  <nz-breadcrumb-item>
+    <a>首页</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>入住消费商品列表</nz-breadcrumb-item>
+</nz-breadcrumb>
+<form nz-form class="search-form" [formGroup]="searchForm" (keydown.enter)="$event.preventDefault();onSearch()" nzLayout="inline">
+  <nz-form-item>
+    <nz-form-label nzFor="name">入住人员姓名</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="nameSuffixIconButton">
+        <input nz-input formControlName="name" placeholder="请选择入住人员姓名" readonly />
+      </nz-input-group>
+      <ng-template #nameSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findCheckInRecord()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="phone">入住人员联系电话</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="phoneSuffixIconButton">
+        <input nz-input formControlName="phone" placeholder="请选择入住人员联系电话" readonly />
+      </nz-input-group>
+      <ng-template #phoneSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findCheckInRecord()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="goodsName">商品名称</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="goodsNameSuffixIconButton">
+        <input nz-input formControlName="goodsName" placeholder="请选择商品名称" readonly />
+      </nz-input-group>
+      <ng-template #goodsNameSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findGoods()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="goodsPrice">商品价格</nz-form-label>
+    <nz-form-control>
+      <nz-input-group nzSearch [nzAddOnAfter]="goodsPriceSuffixIconButton">
+        <input nz-input formControlName="goodsPrice" placeholder="请选择商品价格" readonly />
+      </nz-input-group>
+      <ng-template #goodsPriceSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="findGoods()"><nz-icon nzType="search" /></button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <button nz-button type="button" nzType="primary" [nzLoading]="searchLoading" (click)="onSearch()">查询</button>
+  <button nz-button type="button" class="margin-button" (click)="onReset()">重置</button>
+  <button nz-button type="button" class="margin-button" nzType="primary" (click)="onAdd()">新增</button>
+</form>
+<nz-table #basicTable [nzData]="listOfData" [nzTotal]="total" [nzLoading]="searchLoading" nzSize="small">
+  <thead>
+    <tr>
+      <th>入住人员姓名</th>
+      <th>入住人员联系电话</th>
+      <th>商品名称</th>
+      <th>商品价格</th>
+      <th>数量</th>
+      <th>单价</th>
+      <th>总价</th>
+      <th nzWidth="250px">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.name}}</td>
+      <td>{{data.phone}}</td>
+      <td>{{data.goodsName}}</td>
+      <td>{{data.goodsPrice}}</td>
+      <td>{{data.qty}}</td>
+      <td>{{data.price}}</td>
+      <td>{{data.amount}}</td>
+      <td>
+        <button nz-button type="button" nzType="primary" (click)="editRow(data.id)">编辑</button>
+        <button nz-button type="button" nzDanger class="margin-button" (click)="delRow(data.id)">删除</button>
+        <button nz-button type="button" class="margin-button" (click)="detailRow(data)">详情</button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<check-in-record-selector (checkInRecordSelectedEvent)="handleCheckInRecordSelectedEvent($event)"></check-in-record-selector>
+<goods-selector (goodsSelectedEvent)="handleGoodsSelectedEvent($event)"></goods-selector>
+<check-in-record-detail-add (addedEvent)="onAdded($event)"></check-in-record-detail-add>
+<check-in-record-detail-view></check-in-record-detail-view>
