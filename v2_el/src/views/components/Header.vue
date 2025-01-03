@@ -60,8 +60,7 @@ export default {
       updatePassForm: {
         oldPass: '',
         newPass: '',
-        newPass2: '',
-        type: ''
+        newPass2: ''
       },
       loading: false,
       settingsName: '设置'
@@ -93,7 +92,6 @@ export default {
     },
     clearSessionAndBackToLoginPage () {
       sessionStorage.removeItem('backendToken')
-      sessionStorage.removeItem('type')
       sessionStorage.removeItem('uid')
       sessionStorage.removeItem('username')
       this.$router.replace({ path: '/Login' }).catch(error => { console.log('退出异常', error) })
@@ -104,8 +102,7 @@ export default {
         this.updatePassForm = {
           oldPass: '',
           newPass: '',
-          newPass2: '',
-          type: sessionStorage.getItem('type')
+          newPass2: ''
         }
       }
       if (command === 'logout') {
