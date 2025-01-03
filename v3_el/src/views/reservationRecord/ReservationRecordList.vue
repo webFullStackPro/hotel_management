@@ -89,18 +89,17 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref, inject, toRefs} from 'vue';
+import { inject, onMounted, reactive, ref, toRefs } from 'vue'
 import reservationRecordApi from '@/api/reservationRecordApi'
-import type {ReservationRecordQueryForm} from "@/types/req/reservationRecordQueryForm";
-import type {ReservationRecord} from "@/types/resp/reservationRecord";
-import {ElMessage, ElMessageBox, type FormInstance} from "element-plus";
-import type {Result} from "@/types/result";
-import type {Page} from "@/types/page";
-import { Search } from '@element-plus/icons-vue';
-import RoomSelector from "@/views/room/RoomSelector.vue";
-import ReservationRecordAdd from "@/views/reservationRecord/ReservationRecordAdd.vue"
-import ReservationRecordView from "@/views/reservationRecord/ReservationRecordView.vue"
-import goodsApi from '@/api/goodsApi.ts'
+import type { ReservationRecordQueryForm } from '@/types/req/reservationRecordQueryForm'
+import type { ReservationRecord } from '@/types/resp/reservationRecord'
+import { ElMessage, ElMessageBox, type FormInstance } from 'element-plus'
+import type { Result } from '@/types/result'
+import type { Page } from '@/types/page'
+import { Search } from '@element-plus/icons-vue'
+import RoomSelector from '@/views/room/RoomSelector.vue'
+import ReservationRecordAdd from '@/views/reservationRecord/ReservationRecordAdd.vue'
+import ReservationRecordView from '@/views/reservationRecord/ReservationRecordView.vue'
 import { exportToExcel } from '@/composables/exportUtil.ts'
 import { getReservationRecordStatusText } from '@/composables/dictTranslator.ts'
 
