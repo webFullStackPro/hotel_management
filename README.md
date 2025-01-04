@@ -31,7 +31,7 @@
 
 4.3.执行  _npm run dev_  本地启动
 
-4.4.浏览器访问http://localhost:1573
+4.4.浏览器访问http://localhost:5173
 
 5.react+antdesign实现
 
@@ -41,7 +41,7 @@
 
 5.3.执行  _npm run dev_  本地启动
 
-5.4.浏览器访问http://localhost:1573
+5.4.浏览器访问http://localhost:5173
 
 6.angular+ngzorro实现
 
